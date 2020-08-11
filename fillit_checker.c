@@ -6,7 +6,7 @@
 /*   By: jraty <jraty@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 16:32:56 by jraty             #+#    #+#             */
-/*   Updated: 2020/08/11 12:13:56 by jraty            ###   ########.fr       */
+/*   Updated: 2020/08/11 15:51:42 by jraty            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,22 @@
 
 int		ft_error(int n)
 {
+	if (n == 0)
+		printf("\033[31musage: ./fillit target_file\033[0m\n");
 	if (n == 1)
-		printf("\t\033[31mline lentgh 'x' not 4\033[0m\n");
+		printf("\033[31mopen() failed.\033[0m\n");
 	if (n == 2)
-		printf("\t\033[31mline count 'y' not 4\033[0m\n");
+		printf("\t\033[31mline lentgh 'x' not 4\033[0m\n");
 	if (n == 3)
-		printf("\t\033[31mwrong characters\033[0m");
+		printf("\t\033[31mline count 'y' not 4\033[0m\n");
+	if (n == 4)
+		printf("\t\033[31mwrong characters\033[0m\n");
+	if (n == 6)
+		printf("\033[31mwrong amount of hashes\033[0m\n");
+	if (n == 8)
+		printf("\033[31mdoesn't end with a single newline.\033[0m\n");
+	if (n == 9)
+		printf("\033[31mclose() failed.\033[0m\n");
 	return (0);
 }
 
@@ -30,64 +40,77 @@ int		main(int argc, char **argv)
 {
 	int		fd;
 	char	*line;
-	size_t	l_count;
 	size_t	i;
-	size_t	c;
 	size_t	l;
+// READ IT AGAIN?!?
+	static char	*s[FD];
+	char		*tmp;
+	char		buf[BUF_SIZE + 1];
+	int			ret;
+	int			hash;
 
-	l_count = 0;
 	l = 0;
 	if (argc != 2)
-	{
-		write(2, "usage: ./fillit target_file\n", 28);
-		return (0);
-	}
+		return (ft_error(0));
 	fd = open(argv[1], O_RDONLY);
 	if (fd == -1)
-	{
-		ft_putstr("open() failed.\n");
-		return (0);
-	}
+		return (ft_error(1));
 	while (get_next_line(fd, &line) == 1)
 	{
-		i = 0;
-		c = 0;
-		printf("%s", line);
-		printf("\tline [%zu]", (l++ + 1));
+		l++;
+		printf("%s\tline [%zu]", line, l);
 		if (!(*line))
 		{
 			if (l % 5 != 0)
-				return (ft_error(2));
-			l_count--; 
+				return (ft_error(3));
 		}
 		else
 		{
 			if (ft_strlen(line) == 4)
 				printf("\t\033[32mlength OK\033[0m");
 			else
-				return (ft_error(1));
+				return (ft_error(2));
+			i = 0;
 			while (line[i])
 			{
-				if (line[i] == '.' || line[i] == '#')
-					c++;
+				if (line[i] != '.' && line[i] != '#')
+					return (ft_error(4));
 				i++;
 			}
-			if (c == ft_strlen(line))
+			if (i == ft_strlen(line))
 				printf("\t\033[32mdotorhash OK\033[0m");
-			else
-				return (ft_error(3));
 		}
-//		free(line);
+		free(line);
 		printf("\n");
-		l_count++;
 	}
-	printf("\033[01;33m=====================VALID=FILE=====================\033[0m\n");
-	printf("\033[33mnumber of lines is: %zu\033[0m\n", l_count);
+	if ((l + 1) % 5 != 0)
+		return (ft_error(8));
 	close(fd);
 	if (fd == -1)
+		return (ft_error(9));
+// READ IT AGAIN?!? ---------------------->
+	fd = open(argv[1], O_RDONLY);
+	while ((ret = read(fd, buf, BUF_SIZE)) > 0)
 	{
-		ft_putstr("close() failed.\n");
-		return (0);
+		buf[ret] = '\0';
+		i = 0;
+		hash = 0;
+		while (buf[i])
+		{
+			if (buf[i] == '#')
+				hash++;
+//				if (i < 20 && buf[i + 1] != '#' && buf[i + 5] != '#')
+//						error: hashed don't join
+			i++;
+		}
+		if (hash != 4)
+			return (ft_error(6));
+		tmp = ft_strjoin(s[fd], buf);
+		free(s[fd]);
+		s[fd] = tmp;
 	}
+	printf("\033[01;33m=====================VALID=FILE=====================\033[0m\n");
+	printf("\033[33mnumber of lines is: %zu\033[0m\n", l);
+//	while (1);
 	return (0);
 }
