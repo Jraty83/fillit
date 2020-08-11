@@ -6,7 +6,7 @@
 /*   By: jraty <jraty@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 16:32:56 by jraty             #+#    #+#             */
-/*   Updated: 2020/08/10 15:55:44 by jraty            ###   ########.fr       */
+/*   Updated: 2020/08/11 12:13:56 by jraty            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,11 @@
 int		ft_error(int n)
 {
 	if (n == 1)
-		printf("line lentgh 'x' not 4\n");
+		printf("\t\033[31mline lentgh 'x' not 4\033[0m\n");
 	if (n == 2)
-		printf("line count 'y' not 4\n");
+		printf("\t\033[31mline count 'y' not 4\033[0m\n");
+	if (n == 3)
+		printf("\t\033[31mwrong characters\033[0m");
 	return (0);
 }
 
@@ -32,11 +34,9 @@ int		main(int argc, char **argv)
 	size_t	i;
 	size_t	c;
 	size_t	l;
-	size_t	tetri;
 
 	l_count = 0;
 	l = 0;
-	tetri = 0;
 	if (argc != 2)
 	{
 		write(2, "usage: ./fillit target_file\n", 28);
@@ -53,16 +53,11 @@ int		main(int argc, char **argv)
 		i = 0;
 		c = 0;
 		printf("%s", line);
-		printf("\tline [%zu]", l++);
+		printf("\tline [%zu]", (l++ + 1));
 		if (!(*line))
 		{
-			tetri++;
-			printf("\tl is %zu\ttetri count is: %zu", l, tetri);
-			if (l != (tetri * 5))
-			{
-				printf("\n\033[33minvalid file\033[0m\n");
-				return (0);
-			}
+			if (l % 5 != 0)
+				return (ft_error(2));
 			l_count--; 
 		}
 		else
@@ -70,24 +65,24 @@ int		main(int argc, char **argv)
 			if (ft_strlen(line) == 4)
 				printf("\t\033[32mlength OK\033[0m");
 			else
-			{
-				printf("\t\033[31mwrong length\033[0m");
 				return (ft_error(1));
-			}
 			while (line[i])
 			{
 				if (line[i] == '.' || line[i] == '#')
 					c++;
 				i++;
 			}
-			printf(c == ft_strlen(line) ? "\t\033[32mdotorhash OK\033[0m" : "\t\033[31mwrong characters\033[0m");
+			if (c == ft_strlen(line))
+				printf("\t\033[32mdotorhash OK\033[0m");
+			else
+				return (ft_error(3));
 		}
-		free(line);
+//		free(line);
 		printf("\n");
 		l_count++;
 	}
+	printf("\033[01;33m=====================VALID=FILE=====================\033[0m\n");
 	printf("\033[33mnumber of lines is: %zu\033[0m\n", l_count);
-	printf("\033[33mnumber of tetriminos is: %zu\033[0m\n", tetri);
 	close(fd);
 	if (fd == -1)
 	{
