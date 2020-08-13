@@ -6,13 +6,13 @@
 /*   By: jraty <jraty@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/10 12:30:12 by jraty             #+#    #+#             */
-/*   Updated: 2020/08/10 12:30:53 by jraty            ###   ########.fr       */
+/*   Updated: 2020/08/13 11:37:52 by jraty            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FILLIT_H
 # define FILLIT_H
 
-# define BUF_SIZE 4096
+# define BUF_SIZE 21
 
 #endif
