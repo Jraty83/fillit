@@ -6,7 +6,7 @@
 /*   By: jraty <jraty@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 16:32:56 by jraty             #+#    #+#             */
-/*   Updated: 2020/08/13 12:56:22 by jraty            ###   ########.fr       */
+/*   Updated: 2020/08/13 13:26:47 by jraty            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 int		ft_error(int n)
 {
+	printf("\033[01;31m=====================NOT=VALID======================\033[0m\n");
 	if (n == 0)
 		printf("\033[31musage: ./fillit target_file\033[0m\n");
 	if (n == 1)
@@ -38,12 +39,11 @@ int		ft_error(int n)
 
 int		main(int argc, char **argv)
 {
-	int		fd;
+	int		fd = 4;
 
 	if (argc != 2)
 		return (ft_error(0));
 	if ((fd = open(argv[1], O_RDONLY)) == -1)
-//	if (fd == -1)
 		return (ft_error(1));
 // CHECKER 1
 	char	*line;
@@ -81,8 +81,7 @@ int		main(int argc, char **argv)
 	}
 	if ((l + 1) % 5 != 0)
 		return (ft_error(8));
-	close(fd);
-	if (fd == -1)
+	if (close(fd) == -1)
 		return (ft_error(9));
 // CHECKER 2 (READ IT AGAIN && BUF_SIZE NEEDS TO BE 21!)
 //#undef BUF_SIZE
@@ -93,8 +92,7 @@ int		main(int argc, char **argv)
 //	int		fd;
 //	size_t	i;
 	
-	fd = open(argv[1], O_RDONLY);
-	if (fd == -1)
+	if ((fd = open(argv[1], O_RDONLY)) == -1)
 		return (ft_error(1));
 	while ((ret = read(fd, buf, BUF_SIZE)) > 0)
 	{
@@ -116,8 +114,7 @@ int		main(int argc, char **argv)
 	}
 	if (!(buf[i - 1] == 10 && buf[i] == 0))
 		return (ft_error(8));
-	close(fd);
-	if (fd == -1)
+	if (close(fd) == -1)
 		return (ft_error(9));
 	printf("\033[01;33m=====================VALID=FILE=====================\033[0m\n");
 	printf("\033[33mnumber of lines is: %zu               BUF_SIZE is: %d\033[0m\n", l, BUF_SIZE);
