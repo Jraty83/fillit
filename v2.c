@@ -6,7 +6,7 @@
 /*   By: jraty <jraty@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 16:32:56 by jraty             #+#    #+#             */
-/*   Updated: 2020/08/13 13:41:51 by jraty            ###   ########.fr       */
+/*   Updated: 2020/08/13 13:44:16 by jraty            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int		ft_error(int n)
 
 int		main(int argc, char **argv)
 {
-	int		fd = 4;
+	int		fd;
 
 	if (argc != 2)
 		return (ft_error(0));
