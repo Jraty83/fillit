@@ -6,7 +6,7 @@
 /*   By: jraty <jraty@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 16:32:56 by jraty             #+#    #+#             */
-/*   Updated: 2020/08/13 11:34:40 by jraty            ###   ########.fr       */
+/*   Updated: 2020/08/13 11:52:23 by jraty            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,8 @@ int		main(int argc, char **argv)
 //#undef BUF_SIZE
 //#define BUF_SIZE 21
 	fd = open(argv[1], O_RDONLY);
+	if (fd == -1)
+		return (ft_error(1));
 	while ((ret = read(fd, buf, BUF_SIZE)) > 0)
 	{
 		buf[ret] = '\0';
@@ -118,6 +120,9 @@ int		main(int argc, char **argv)
 	}
 	if (!(buf[i - 1] == 10 && buf[i] == 0))
 		return (ft_error(8));
+	close(fd);
+	if (fd == -1)
+		return (ft_error(9));
 	printf("\033[01;33m=====================VALID=FILE=====================\033[0m\n");
 	printf("\033[33mnumber of lines is: %zu\033[0m\n", l);
 //	while (1);
