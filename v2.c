@@ -6,7 +6,7 @@
 /*   By: jraty <jraty@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 16:32:56 by jraty             #+#    #+#             */
-/*   Updated: 2020/08/13 13:26:47 by jraty            ###   ########.fr       */
+/*   Updated: 2020/08/13 13:41:51 by jraty            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,17 @@
 
 int		ft_error(int n)
 {
-	printf("\033[01;31m=====================NOT=VALID======================\033[0m\n");
+	printf("\033[01;31m\n=====================NOT=VALID======================\033[0m\n");
 	if (n == 0)
 		printf("\033[31musage: ./fillit target_file\033[0m\n");
 	if (n == 1)
 		printf("\033[31mopen() failed.\033[0m\n");
 	if (n == 2)
-		printf("\t\033[31mline lentgh 'x' not 4\033[0m\n");
+		printf("\033[31mline lentgh 'x' not 4\033[0m\n");
 	if (n == 3)
-		printf("\t\033[31mline count 'y' not 4\033[0m\n");
+		printf("\033[31mline count 'y' not 4\033[0m\n");
 	if (n == 4)
-		printf("\t\033[31mwrong characters\033[0m\n");
+		printf("\033[31mwrong characters\033[0m\n");
 	if (n == 6)
 		printf("\033[31mwrong amount of hashes\033[0m\n");
 	if (n == 7)
