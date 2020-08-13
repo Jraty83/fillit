@@ -6,28 +6,26 @@
 /*   By: jraty <jraty@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 16:32:56 by jraty             #+#    #+#             */
-/*   Updated: 2020/08/13 11:52:23 by jraty            ###   ########.fr       */
+/*   Updated: 2020/08/13 14:37:51 by jraty            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "/Users/jraty/libft/libft.h"
-#include "/Users/jraty/libft/get_next_line.h"
 #include "fillit.h"
-#include <fcntl.h>
 #include <stdio.h>
 
 int		ft_error(int n)
 {
+	printf("\033[01;31m\n=====================NOT=VALID======================\033[0m\n");
 	if (n == 0)
 		printf("\033[31musage: ./fillit target_file\033[0m\n");
 	if (n == 1)
 		printf("\033[31mopen() failed.\033[0m\n");
 	if (n == 2)
-		printf("\t\033[31mline lentgh 'x' not 4\033[0m\n");
+		printf("\033[31mline lentgh 'x' not 4\033[0m\n");
 	if (n == 3)
-		printf("\t\033[31mline count 'y' not 4\033[0m\n");
+		printf("\033[31mline count 'y' not 4\033[0m\n");
 	if (n == 4)
-		printf("\t\033[31mwrong characters\033[0m\n");
+		printf("\033[31mwrong characters\033[0m\n");
 	if (n == 6)
 		printf("\033[31mwrong amount of hashes\033[0m\n");
 	if (n == 7)
@@ -39,25 +37,14 @@ int		ft_error(int n)
 	return (0);
 }
 
-int		main(int argc, char **argv)
+// CHECKER 1
+int		ft_checker1(int fd)
 {
-	int		fd;
 	char	*line;
 	size_t	i;
 	size_t	l;
-// READ IT AGAIN?!?
-	static char	*s[FD];
-	char		*tmp;
-	char		buf[BUF_SIZE + 1];
-	int			ret;
-	int			hash;
-
+	
 	l = 0;
-	if (argc != 2)
-		return (ft_error(0));
-	fd = open(argv[1], O_RDONLY);
-	if (fd == -1)
-		return (ft_error(1));
 	while (get_next_line(fd, &line) == 1)
 	{
 		l++;
@@ -88,15 +75,19 @@ int		main(int argc, char **argv)
 	}
 	if ((l + 1) % 5 != 0)
 		return (ft_error(8));
-	close(fd);
-	if (fd == -1)
-		return (ft_error(9));
-// READ IT AGAIN?!? ---------------------->
+	return (1);
+}
+
+// CHECKER 2 (READ IT AGAIN && BUF_SIZE NEEDS TO BE 21!)
 //#undef BUF_SIZE
 //#define BUF_SIZE 21
-	fd = open(argv[1], O_RDONLY);
-	if (fd == -1)
-		return (ft_error(1));
+int		ft_checker2(int fd)
+{
+	char	buf[BUF_SIZE + 1];
+	int		ret;
+	int		hash;
+	size_t	i;
+	
 	while ((ret = read(fd, buf, BUF_SIZE)) > 0)
 	{
 		buf[ret] = '\0';
@@ -114,17 +105,34 @@ int		main(int argc, char **argv)
 		}
 		if (hash != 4)
 			return (ft_error(6));
-		tmp = ft_strjoin(s[fd], buf);
-		free(s[fd]);
-		s[fd] = tmp;
 	}
 	if (!(buf[i - 1] == 10 && buf[i] == 0))
 		return (ft_error(8));
-	close(fd);
-	if (fd == -1)
+	return (1);
+}
+
+int		main(int argc, char **argv)
+{
+	int		fd;
+
+	if (argc != 2)
+		return (ft_error(0));
+	if ((fd = open(argv[1], O_RDONLY)) == -1)
+		return (ft_error(1));
+	if (ft_checker1(fd) == 0)
+		return (0);
+// NO NEED TO CLOSE IT "MANUALLY" ??
+//	if (close(fd) == -1)
+//		return (ft_error(9));
+	if ((fd = open(argv[1], O_RDONLY)) == -1)
+		return (ft_error(1));
+	if (ft_checker2(fd) == 0)
+		return (0);
+	if (close(fd) == -1)
 		return (ft_error(9));
 	printf("\033[01;33m=====================VALID=FILE=====================\033[0m\n");
-	printf("\033[33mnumber of lines is: %zu\033[0m\n", l);
+// -----------> NOW GO FOR SOLVER...	
+// TEST FOR LEAKS
 //	while (1);
 	return (0);
 }
