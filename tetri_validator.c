@@ -6,7 +6,7 @@
 /*   By: jraty <jraty@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 16:32:56 by jraty             #+#    #+#             */
-/*   Updated: 2020/08/13 14:37:51 by jraty            ###   ########.fr       */
+/*   Updated: 2020/08/13 18:04:46 by jraty            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ int		ft_checker2(int fd)
 
 int		main(int argc, char **argv)
 {
-	int		fd;
+	int			fd;
 
 	if (argc != 2)
 		return (ft_error(0));
@@ -128,10 +128,11 @@ int		main(int argc, char **argv)
 		return (ft_error(1));
 	if (ft_checker2(fd) == 0)
 		return (0);
-	if (close(fd) == -1)
-		return (ft_error(9));
+		if (close(fd) == -1)
+	return (ft_error(9));
 	printf("\033[01;33m=====================VALID=FILE=====================\033[0m\n");
-// -----------> NOW GO FOR SOLVER...	
+// -----------> NOW GO FOR SOLVER...
+// board starting size = sqrt(# of tetrominoes * 4 characters per tetromino)
 // TEST FOR LEAKS
 //	while (1);
 	return (0);
