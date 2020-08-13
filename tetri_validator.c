@@ -6,11 +6,12 @@
 /*   By: jraty <jraty@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 16:32:56 by jraty             #+#    #+#             */
-/*   Updated: 2020/08/13 10:37:50 by jraty            ###   ########.fr       */
+/*   Updated: 2020/08/13 11:34:40 by jraty            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "/Users/jraty/libft/libft.h"
+#include "/Users/jraty/libft/get_next_line.h"
 #include "fillit.h"
 #include <fcntl.h>
 #include <stdio.h>
