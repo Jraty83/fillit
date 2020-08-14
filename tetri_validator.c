@@ -6,7 +6,7 @@
 /*   By: jraty <jraty@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 16:32:56 by jraty             #+#    #+#             */
-/*   Updated: 2020/08/13 18:11:10 by jraty            ###   ########.fr       */
+/*   Updated: 2020/08/14 11:17:32 by jraty            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,23 @@ int		ft_error(int n)
 		printf("\033[31mclose() failed.\033[0m\n");
 	return (0);
 }
+
+// GET BOARD SIZE (sq x sq)
+/*int		ft_sqrt_roundup(int nb)
+{
+	int		sq;
+
+	if (nb == 0 || nb == 1)
+		return (nb);
+	sq = 1;
+	while ((sq * sq) <= nb)
+	{
+		if ((sq * sq) == nb)
+			return (sq);
+		sq += 1;
+	}
+	return (sq);
+}*/
 
 // CHECKER 1
 int		ft_checker1(int fd)
