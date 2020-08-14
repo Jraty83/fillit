@@ -6,7 +6,7 @@
 /*   By: jraty <jraty@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 16:32:56 by jraty             #+#    #+#             */
-/*   Updated: 2020/08/14 11:17:32 by jraty            ###   ########.fr       */
+/*   Updated: 2020/08/14 14:30:59 by jraty            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,19 +103,27 @@ int		ft_checker2(int fd)
 	char	buf[BUF_SIZE + 1];
 	int		ret;
 	int		hash;
+	int		conn;
 	size_t	i;
-	
+
 	while ((ret = read(fd, buf, BUF_SIZE)) > 0)
 	{
 		buf[ret] = '\0';
 		i = 0;
 		hash = 0;
+		conn = 0;
 		while (buf[i])
 		{
 			if (buf[i] == '#')
 			{
-				if (buf[i - 5] != '#' && buf[i + 5] != '#' && buf[i + 1] != '#' && buf[i - 1] != '#')
-					return (ft_error(7));
+				if (buf[i - 5] == '#')
+					conn++;
+				if (buf[i + 5] == '#')
+					conn++;
+				if (buf[i + 1] == '#')
+					conn++;
+				if (buf[i - 1] == '#')
+					conn++;
 				hash++;
 			}
 			i++;
@@ -125,6 +133,8 @@ int		ft_checker2(int fd)
 	}
 	if (!(buf[i - 1] == 10 && buf[i] == 0))
 		return (ft_error(8));
+	if (conn != 6 && conn != 8)
+		return (ft_error(7));
 	return (1);
 }
 
