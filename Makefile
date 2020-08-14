@@ -6,7 +6,7 @@
 #    By: jraty <jraty@student.hive.fi>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/06 16:20:49 by jraty             #+#    #+#              #
-#    Updated: 2020/08/13 11:37:12 by jraty            ###   ########.fr        #
+#    Updated: 2020/08/14 11:19:11 by jraty            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ all: $(NAME)
 
 $(NAME):
 	@make -C $(LIB) re
+	@make -C $(LIB) clean
 	@gcc $(FLAGS) -I $(LIB) -o $(OBJS) -c $(SRCS)
 	@gcc -o $(NAME) $(OBJS) -I $(LIB) -L $(LIB) -lft
 
