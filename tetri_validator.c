@@ -6,7 +6,7 @@
 /*   By: jraty <jraty@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/03 00:21:02 by jraty             #+#    #+#             */
-/*   Updated: 2020/09/03 15:08:29 by jraty            ###   ########.fr       */
+/*   Updated: 2020/09/04 13:34:08 by jraty            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ int	ft_checker1(int fd)
 	if (!ft_reading(fd, &i, &l, line))
 		return (0);
 	if ((l + 1) % 5 != 0)
+		return (0);
+	if (l > 129)
 		return (0);
 	return (1);
 }
